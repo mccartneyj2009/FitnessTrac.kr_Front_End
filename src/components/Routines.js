@@ -1,6 +1,6 @@
-const routines = ({ routines, setRoutines }) => {
+const Routines = ({ routines, setRoutines }) => {
   console.log(routines);
-
+  // let activities = routines.activities;
   if (!routines) {
     return <div></div>;
   }
@@ -24,4 +24,4 @@ const routines = ({ routines, setRoutines }) => {
   );
 };
 
-export default routines;
+export default Routines;

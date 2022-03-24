@@ -1,10 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import HomePage from "./HomePage";
-import Routines from "./Routines";
+import HomePage from "./components/HomePage.js";
+import Routines from "./components/Routines.js";
+import Register from "./components/Register.js";
+import NavBar from "./components/NavBar.js";
+const BASE_URL = "https://fitnesstrac-kr.herokuapp.com/";
 
 const App = () => {
   const [routines, setRoutines] = useState([]);
+  const [token, setToken] = useState("");
+
+  const lsToken = localStorage.getItem("token");
 
   const fetchRoutines = async () => {
     const resp = await fetch(
@@ -27,10 +33,10 @@ const App = () => {
   //   console.log(fetchRoutines);
   return (
     <div>
-      {/* <div>
-        <Navbar />
-      </div> */}
-      {/* <Route exact path="/home" element={<Home/>}/> */}
+      <div>
+        <NavBar />
+      </div>
+
       <Routes>
         <Route exact path="/" element={<HomePage />} />
         <Route
@@ -38,6 +44,7 @@ const App = () => {
           path="/routines"
           element={<Routines routines={routines} setRoutines={setRoutines} />}
         />
+        <Route exact path="/register" element={<Register />} />
         {/* <Route exact path="/myroutines">
         <MyRoutines />
       </Route>
@@ -47,9 +54,7 @@ const App = () => {
       <Route exact path="/login">
         <Login />
       </Route>
-      <Route exact path="/register">
-        <Register />
-      </Route> */}
+      */}
       </Routes>
     </div>
   );
