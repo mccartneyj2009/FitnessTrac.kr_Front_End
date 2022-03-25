@@ -1,5 +1,16 @@
+import { Route, Routes } from "react-router-dom";
+import Activities from "./components/Activities"
+
 const App = () => {
-    return <>This is the app component</>;
+    return <>
+
+        <Routes>
+
+            <Route path='activities' element = {<Activities/>}/>
+
+        </Routes>
+    
+    </>;
 };
 
 export default App;
