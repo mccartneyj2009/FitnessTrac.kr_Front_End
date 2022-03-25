@@ -35,8 +35,9 @@ body {
 
 .routines_activities {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin: 2rem;
 }
 
 .routines_creator {
@@ -53,7 +54,7 @@ body {
   justify-content: space-between; */
   /* align-items: center; */
   display: grid;
-  grid-template-columns: 1.5fr 0.5fr 0.5fr 1fr;
+  grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
   margin: 1.5rem;
   border-bottom: #18e193 solid 2px;
 }

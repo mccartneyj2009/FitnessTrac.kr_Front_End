@@ -17,19 +17,23 @@ console.log(routines)
           <h2>{routine.name.toUpperCase()}</h2>
           <div className="routines_creator"><span>{routine.creatorName}</span></div>
           
-          {routine.activities.map((activity) => (
-            <div key={activity.id} className="routines_activities_content">
+          <div className="routines_activities">
 
-              <p className="routines_activities_name">{activity.name}</p>
-              <p><span>Count: </span>{activity.count}</p>
-              <p><span>Duration: </span>{activity.duration}</p>
-              <p>{activity.description}</p>
+            {routine.activities.map((activity) => (
+              <div key={activity.id} className="routines_activities_content">
 
-            </div>
-          ))}
+                <p className="routines_activities_name">{activity.name}</p>
+                <p><span>Count: </span>{activity.count}</p>
+                <p><span>Duration: </span>{activity.duration}</p>
+                <p>{activity.description}</p>
+
+              </div>
+            ))}
+
+          </div>
 
           <h4 className="routines_goal">Goal: {routine.goal}</h4>
-          
+
         </div>
       ))}
       
