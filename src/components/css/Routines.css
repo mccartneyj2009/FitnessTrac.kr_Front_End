@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+body {
+  font-family: "Playfair Display";
+}
+
+.routines_main {
+  display: flex;
+  flex-direction: column;
+}
+
+.routines_main h1 {
+  text-align: center;
+  margin: 2rem;
+  color: #e7991e;
+}
+.routines_container {
+  border-width: 4px;
+  border-style: solid;
+  border-image: linear-gradient(to right, #e7991e, #e11866, #18e193, #1866e1) 1;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.routines_container h2 {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.routines_goal {
+  text-align: center;
+  padding: 2rem;
+}
+
+.routines_activities {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.routines_creator {
+  text-align: center;
+  /* margin: 2rem; */
+  margin-bottom: 4rem;
+  font-size: 1.7rem;
+  font-weight: bold;
+  color: #e11866;
+}
+
+.routines_activities_content {
+  /* display: flex;
+  justify-content: space-between; */
+  /* align-items: center; */
+  display: grid;
+  grid-template-columns: 1.5fr 0.5fr 0.5fr 1fr;
+  margin: 1.5rem;
+  border-bottom: #18e193 solid 2px;
+}
+
+.routines_activities_content span {
+  font-weight: bold;
+}
+
+.routines_creator span {
+  padding: 0 0.5rem;
+  border-left: solid 2px #1866e1;
+  border-right: solid 2px #1866e1;
+}
+
+/* .routines_activities_details {
+  display: flex;
+  margin: 1.5rem 0;
+} */
+
+.routines_activities_name {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #1866e1;
+}
+
+/* .routines_activities_details p {
+  padding-right: 1.5rem;
+  font-weight: bold;
+}
+
+.routines_activities_details span {
+  border: solid 2px #18e193;
+  background-color: #18e193;
+  border-radius: 50%;
+  padding: 1rem;
+} */

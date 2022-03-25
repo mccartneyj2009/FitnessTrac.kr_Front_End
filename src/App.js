@@ -5,10 +5,13 @@ import Routines from "./components/Routines.js";
 import Register from "./components/Register.js";
 import Login from "./components/Login";
 import NavBar from "./components/NavBar.js";
+import Activities from "./components/Activities.js";
+import MyRoutines from "./components/MyRoutines.js";
 export const BASE_URL = "https://fitnesstrac-kr.herokuapp.com/";
 
 const App = () => {
     const [routines, setRoutines] = useState([]);
+    const [activities, setActivities] = useState([]);
     const [token, setToken] = useState("");
 
     const fetchRoutines = async () => {
@@ -25,9 +28,17 @@ const App = () => {
         setRoutines(info);
     };
 
+    const fetchActivities = async () => {
+        const resp = await fetch(`${BASE_URL}api/activities`);
+        const info = await resp.json();
+
+        setActivities(info);
+    };
+
     useEffect(() => {
         fetchRoutines();
-    });
+        fetchActivities();
+    }, []);
 
     //   console.log(fetchRoutines);
     return (

@@ -41,9 +41,9 @@ const Register = ({ setToken }) => {
     }
 
     return (
-        <div id="registration-form">
+        <div id="registration-form" className="register-login_main">
             <form
-                className="app-form"
+                // className="app-form"
                 onSubmit={(e) => {
                     e.preventDefault();
 
@@ -88,6 +88,7 @@ const Register = ({ setToken }) => {
                     }}
                 ></input>
                 <button>Register</button>
+                <Link to="/login"> Already have an account? Log in </Link>
             </form>
             <p>
                 Already have an accout? <Link to="/login">Login</Link>
