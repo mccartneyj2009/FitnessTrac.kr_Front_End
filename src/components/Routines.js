@@ -1,6 +1,5 @@
 const Routines = ({ routines, setRoutines }) => {
-  console.log(routines);
-  // let activities = routines.activities;
+  // console.log(routines);
   if (!routines) {
     return <div></div>;
   }
@@ -14,10 +13,14 @@ const Routines = ({ routines, setRoutines }) => {
           <h3>Goal: {routine.goal}</h3>
           <h3>Author: {routine.creatorName}</h3>
           {/* maybe map through activities */}
-          <h3>Activities: {routine.activities.name}</h3>
-          <p>{routine.activities.description}</p>
-          <h4>{routine.activities.count}</h4>
-          <h4>{routine.activities.duration}</h4>
+          {routine.activities.map((activity) => (
+            <div key={routine.id}>
+              <h3>Activities: {activity.name}</h3>
+              <p>Description: {activity.description}</p>
+              <h4>Count: {activity.count}</h4>
+              <h4>Duration: {activity.duration}</h4>
+            </div>
+          ))}
         </div>
       ))}
     </>
