@@ -27,6 +27,7 @@
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: #e7991e;
+  border: solid 2px #ea21ce;
 }
 
 .navbar_links_container a:hover {
