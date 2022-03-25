@@ -1,0 +1,47 @@
+.register-login_main {
+  display: flex;
+  justify-content: center;
+}
+
+.register-login_main form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem;
+  height: 400px;
+  width: 400px;
+  background-color: #e7991e;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #ea21ce;
+}
+
+.register-login_main form h1 {
+  margin: 2rem 0;
+}
+
+.register-login_main form label {
+  display: none;
+}
+
+.register-login_main form input {
+  margin: 0.5rem;
+  width: 300px;
+  height: 50px;
+  border: #1866e1 solid 1.5px;
+}
+
+.register-login_main button {
+  margin: 1rem;
+  width: 300px;
+  height: 30px;
+  background-color: #1866e1;
+  color: white;
+}
+
+.register-login_main a {
+  margin-bottom: 1rem 0;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #a221ea;
+}

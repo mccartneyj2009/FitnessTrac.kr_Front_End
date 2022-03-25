@@ -5,6 +5,8 @@ import Routines from "./components/Routines.js";
 import Register from "./components/Register.js";
 import NavBar from "./components/NavBar.js";
 import Activities from "./components/Activities.js";
+import MyRoutines from "./components/MyRoutines.js";
+import Login from "./components/Login.js";
 const BASE_URL = "https://fitnesstrac-kr.herokuapp.com/";
 
 const App = () => {
@@ -60,6 +62,8 @@ const App = () => {
             activities={activities}
         />} />
 
+        <Route exact path="/login" element={<Login/>} />
+
 
 
         {/* <Route exact path="/myroutines">
@@ -72,6 +76,17 @@ const App = () => {
         <Login />
       </Route>
       */}
+        <Route
+          exact
+          path="/myroutines" //maybe /users/:username/routines
+          element={<MyRoutines />}
+        />
+        {/* <Route exact path="/activities">
+          <Activities />
+        </Route> */}
+        {/* <Route exact path="/login">
+          <Login />
+        </Route> */}
       </Routes>
     </div>
   );
