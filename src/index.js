@@ -7,11 +7,11 @@ import App from "./App";
 const app = document.getElementById("app");
 
 ReactDOM.render(
-    //strict mode
-    <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </React.StrictMode>,
-    app
+  //strict mode
+  <React.StrictMode>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </React.StrictMode>,
+  app
 );
