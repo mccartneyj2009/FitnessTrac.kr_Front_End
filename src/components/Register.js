@@ -3,7 +3,9 @@ import { useState } from "react";
 const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [conform, setConfirm] = useState("");
+    const [confirm, setConfirm] = useState("");
+
+    console.log(username, password, confirm);
 
     return (
         <div id="registration-form">
@@ -14,11 +16,29 @@ const Register = () => {
                 }}
             >
                 <label htmlFor="username">Username</label>
-                <input id="username" type="text"></input>
+                <input
+                    id="username"
+                    type="text"
+                    onChange={(e) => {
+                        setUsername(e.target.value);
+                    }}
+                ></input>
                 <label htmlFor="password">Password</label>
-                <input id="password" type="password"></input>
+                <input
+                    id="password"
+                    type="password"
+                    onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}
+                ></input>
                 <label htmlFor="confirm-password">Confirm Password</label>
-                <input id="confirm-password" type="password"></input>
+                <input
+                    id="confirm-password"
+                    type="password"
+                    onChange={(e) => {
+                        setConfirm(e.target.value);
+                    }}
+                ></input>
                 <button>Register</button>
             </form>
         </div>
