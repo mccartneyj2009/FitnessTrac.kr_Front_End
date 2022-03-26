@@ -31,12 +31,12 @@ const MyRoutines = ({ token, user }) => {
         }
       );
       const info = await resp.json();
-      console.log(info);
+      // console.log(info);
       setUserRoutines(info);
     }
   };
 
-  const createNewRoutine = async (token) => {
+  const createNewRoutine = async (e) => {
     const resp = await fetch(
       "http://fitnesstrac-kr.herokuapp.com/api/routines",
       {
@@ -49,26 +49,32 @@ const MyRoutines = ({ token, user }) => {
       }
     );
     const info = await resp.json();
-    setCreatedRoutine(info);
+    console.log(info);
+    // setCreatedRoutine(info);
+    setUserRoutines(info);
 
     setName("");
     setGoal("");
   };
 
-  const updateRoutine = async () => {
-    const resp = fetch("http://fitnesstrac-kr.herokuapp.com/api/routines/6", {
-      method: "PATCH",
-      body: JSON.stringify({
-        name: "Long Cardio Day",
-        goal: "To get your heart pumping!",
-      }),
-    });
+  const updateRoutine = async (id) => {
+    const resp = await fetch(
+      `http://fitnesstrac-kr.herokuapp.com/api/routines/${id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({
+          name,
+          goal,
+        }),
+      }
+    );
     const info = await resp.json();
     setUserRoutines(info);
   };
-
+  // console.log(user);
+  // console.log(userRoutines);
   const deleteRoutine = async (routineId) => {
-    const resp = fetch(
+    const resp = await fetch(
       `http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`,
       {
         method: "DELETE",
@@ -79,18 +85,18 @@ const MyRoutines = ({ token, user }) => {
       }
     );
     const info = await resp.json();
+    console.log("===>", info);
     if (info) {
       const newRoutines = userRoutines.filter(
-        (routine) => routine.id !== routineId
+        (routine) => routine.creatorid !== user.id
       );
       setUserRoutines(newRoutines);
     }
   };
 
-  // console.log(userRoutines);
   useEffect(() => {
     fetchUserRoutines();
-  }, [user]);
+  }, [user, userRoutines]);
 
   if (!user) {
     return <div></div>;
@@ -131,21 +137,30 @@ const MyRoutines = ({ token, user }) => {
         <div key={routine.id} id="routines">
           <h2>{routine.name}</h2>
           <h3>Goal: {routine.goal}</h3>
+          <button
+            value={routine.id}
+            onClick={(e) => {
+              const id = e.target.value;
+              deleteRoutine(id);
+            }}
+          >
+            Delete Routine
+          </button>
+          <button
+            value={routine.id}
+            onClick={(e) => {
+              const id = e.target.value;
+              updateRoutine(id);
+            }}
+          >
+            Update Routine
+          </button>
           {routine.activities.map((activity) => (
             <div key={activity.id}>
               <h3>Activities: {activity.name}</h3>
               <h4>Description: {activity.description}</h4>
               <p>Count: {activity.count}</p>
               <p>Duration: {activity.duration}</p>
-              <button
-                value={routine.id}
-                onClick={(e) => {
-                  const id = e.target.value;
-                  deleteRoutine(id);
-                }}
-              >
-                Delete Routine
-              </button>
             </div>
           ))}
         </div>
