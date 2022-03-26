@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 import "./css/NavBar.css";
 
@@ -6,6 +7,10 @@ import "./css/NavBar.css";
 //add my routines & logout option after getting user
 const NavBar = () => {
     const lsToken = localStorage.getItem("token");
+
+    useEffect(() => {
+        lsToken = localStorage.getItem("token");
+    }, [lsToken]);
 
     if (lsToken) {
         return (

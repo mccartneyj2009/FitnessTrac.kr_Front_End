@@ -13,6 +13,7 @@ const App = () => {
     const [routines, setRoutines] = useState([]);
     const [activities, setActivities] = useState([]);
     const [token, setToken] = useState("");
+    console.log(token);
 
     const fetchRoutines = async () => {
         const resp = await fetch(
@@ -62,14 +63,12 @@ const App = () => {
                 <Route
                     exact
                     path="/register"
-                    element={<Register />}
-                    setToken={setToken}
+                    element={<Register setToken={setToken} />}
                 />
                 <Route
                     exact
                     path="/login"
-                    element={<Login />}
-                    setToken={setToken}
+                    element={<Login setToken={setToken} />}
                 />
                 {/* <Route exact path="/myroutines">
         <MyRoutines />
