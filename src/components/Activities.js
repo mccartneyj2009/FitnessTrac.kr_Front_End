@@ -1,11 +1,8 @@
-import { useState } from "react";
-
-const BASE_URL = `https://fitnesstrac-kr.herokuapp.com/api`;
 
 
-const Activities = ({setActivities, activities}) => {
+const Activities = ({activities}) => {
     console.log(activities)
-    return <>
+    return <div>
 
         {activities?.map(activity => {
             return <div key={activity.id}>
@@ -14,7 +11,7 @@ const Activities = ({setActivities, activities}) => {
             </div>
         })}
     
-    </>
+    </div>
 
 }
 
