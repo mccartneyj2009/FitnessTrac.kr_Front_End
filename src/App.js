@@ -13,7 +13,7 @@ const App = () => {
     const [routines, setRoutines] = useState([]);
     const [activities, setActivities] = useState([]);
     const [token, setToken] = useState("");
-    console.log(token);
+    const [user, setUser] = useState(null);
 
     const fetchRoutines = async () => {
         const resp = await fetch(
@@ -36,10 +36,32 @@ const App = () => {
         setActivities(info);
     };
 
+    const fetchUser = async () => {
+        const lstoken = localStorage.getItem("token");
+        if (lstoken) {
+            setToken(lstoken);
+        }
+        const resp = await fetch(
+            "http://fitnesstrac-kr.herokuapp.com/api/users/me",
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${lstoken}`,
+                },
+            }
+        );
+        const info = await resp.json();
+        // console.log(info);
+        if (info) {
+            setUser(info);
+        }
+    };
+
     useEffect(() => {
+        fetchUser();
         fetchRoutines();
         fetchActivities();
-    }, []);
+    }, [token]);
 
     //   console.log(fetchRoutines);
     return (
@@ -70,16 +92,19 @@ const App = () => {
                     path="/login"
                     element={<Login setToken={setToken} />}
                 />
-                {/* <Route exact path="/myroutines">
-        <MyRoutines />
+                <Route
+                    exact
+                    path="/myroutines"
+                    element={<MyRoutines token={token} user={user} />}
+                />
+                {/* <MyRoutines />
       </Route>
       <Route exact path="/activities">
         <Activities />
       </Route>
       <Route exact path="/login">
         <Login />
-      </Route>
-      */}
+      </Route> */}
             </Routes>
         </div>
     );
