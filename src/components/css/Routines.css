@@ -13,66 +13,41 @@ body {
 .routines_main h1 {
   text-align: center;
   margin: 2rem;
-  color: #e7991e;
+  color: #1866e1;
 }
 .routines_container {
-  border-width: 4px;
-  border-style: solid;
-  border-image: linear-gradient(to right, #e7991e, #e11866, #18e193, #1866e1) 1;
+  border: #1866e1 solid 2px;
   margin: 1rem;
   padding: 0.5rem;
+  box-shadow: 5px 5px 5px gray;
 }
 
-.routines_container h2 {
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.routines_goal {
-  text-align: center;
-  padding: 2rem;
-}
-
-.routines_activities {
+.routines_creator-title {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  margin: 2rem;
+  align-items: center;
+  margin: 1rem;
 }
 
-.routines_creator {
-  text-align: center;
-  /* margin: 2rem; */
-  margin-bottom: 4rem;
-  font-size: 1.7rem;
+.routines_creator-title h2 {
+  color: #e7991e;
+  margin: 0.5rem;
+}
+
+.routines_creator-title span {
+  color: #1866e1;
+  margin: 0.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: #e11866;
 }
 
-.routines_activities_content {
-  /* display: flex;
-  justify-content: space-between; */
-  /* align-items: center; */
+.routines_activities_container {
   display: grid;
   grid-template-columns: 1fr 0.5fr 0.5fr 1fr;
+  align-items: center;
   margin: 1.5rem;
-  border-bottom: #18e193 solid 2px;
+  border-bottom: #e7991e solid 2px;
 }
-
-.routines_activities_content span {
-  font-weight: bold;
-}
-
-.routines_creator span {
-  padding: 0 0.5rem;
-  border-left: solid 2px #1866e1;
-  border-right: solid 2px #1866e1;
-}
-
-/* .routines_activities_details {
-  display: flex;
-  margin: 1.5rem 0;
-} */
 
 .routines_activities_name {
   font-weight: bold;
@@ -80,14 +55,17 @@ body {
   color: #1866e1;
 }
 
-/* .routines_activities_details p {
-  padding-right: 1.5rem;
+.routines_activities_container span {
   font-weight: bold;
 }
 
-.routines_activities_details span {
-  border: solid 2px #18e193;
-  background-color: #18e193;
-  border-radius: 50%;
-  padding: 1rem;
-} */
+.routines_goal {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 1rem;
+}
+
+.routines_goal span {
+  font-weight: bold;
+  margin: 0.5rem;
+}
