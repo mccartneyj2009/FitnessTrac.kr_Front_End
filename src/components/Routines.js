@@ -1,21 +1,15 @@
 import "./css/Routines.css";
 
-const Routines = ({ routines, setRoutines }) => {
-  // console.log(routines);
-  // if (!routines) {
-  //   return <div></div>;
-  // }
-  console.log(routines);
+const Routines = ({routines}) => {
+
   return (
     <div className="routines_main">
 
       <h1>Routines</h1>
 
       {routines.map((routine) => (
-
+        
         <div key={routine.id} id="routines" className="routines_container">
-
-          
           <div className="routines_creator-title">
             <h2>{routine.name.toUpperCase()}</h2>
             <span>( {routine.creatorName} )</span>
@@ -23,7 +17,6 @@ const Routines = ({ routines, setRoutines }) => {
 
           {routine.activities.map((activity) => (
             <div key={activity.id} className="routines_activities_container">
-
               <p className="routines_activities_name">{activity.name}</p>
               <p>
                 <span>Count: </span>

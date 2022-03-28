@@ -4,10 +4,10 @@ import { BASE_URL } from "../App";
 
 
 const AddActivity = ({token,fetchActivities}) => {
+
     const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
     const [error, setError] = useState("");
-    // console.log(token)
 
     const addActivityHandler = async (e) => {
         e.preventDefault();
@@ -60,7 +60,9 @@ const AddActivity = ({token,fetchActivities}) => {
                         setActivityDescription(e.target.value)
                     }}
                 />
-                <button>(+ Add)</button>
+                <button>
+                    (+ Add)
+                </button>
             </form>
             <div className="activities_add_error">
                 <p>{error}</p>

@@ -19,16 +19,9 @@ const NavBar = () => {
           <Link to="/routines">Routines</Link>
           <Link to="/activities">Activities</Link>
           <Link to="/myroutines"> My Routines</Link>
-          <Link
-            to="/"
-            onClick={() => {
-              localStorage.removeItem("token");
-            }}
-          >
-            Logout
-          </Link>
+          <Link to="/login">Login</Link>
 
-          </div>
+        </div>
 
       </div>
     );

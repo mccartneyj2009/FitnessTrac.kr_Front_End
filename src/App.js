@@ -13,7 +13,7 @@ const App = () => {
   const [routines, setRoutines] = useState([]);
   const [activities, setActivities] = useState([]);
   const [token, setToken] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
 
   const fetchRoutines = async () => {
     const resp = await fetch(
@@ -21,7 +21,7 @@ const App = () => {
       {
         headers: {
           "Content-Type": "application/json",
-        },
+        }
       }
     );
 
@@ -30,7 +30,11 @@ const App = () => {
   };
 
   const fetchActivities = async () => {
-    const resp = await fetch(`${BASE_URL}api/activities`);
+    const resp = await fetch(`${BASE_URL}api/activities`,{
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
     const info = await resp.json();
 
     setActivities(info);
@@ -42,7 +46,7 @@ const App = () => {
       setToken(lstoken);
     }
     const resp = await fetch(
-      "http://fitnesstrac-kr.herokuapp.com/api/users/me",
+      `${BASE_URL}api/users/me`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -55,15 +59,16 @@ const App = () => {
     if (info) {
       setUser(info);
     }
+
+    return info;
   };
 
   useEffect(() => {
     fetchUser();
     fetchRoutines();
     fetchActivities();
-  }, [token]);
+  }, []);
 
-  //   console.log(fetchRoutines);
   return (
     <div>
       <div>
@@ -89,7 +94,12 @@ const App = () => {
         <Route 
           exact 
           path="/login" 
-          element={<Login setToken={setToken} />} 
+          element={<Login
+            setUser={setUser}
+            user={user}
+            setToken={setToken}
+            fetchUser={fetchUser}
+            />} 
         />
         <Route
           exact
@@ -97,7 +107,8 @@ const App = () => {
           element={<MyRoutines 
             token={token} 
             user={user} 
-            fetchRoutines={fetchRoutines}/>}
+            fetchRoutines={fetchRoutines}
+            routines={routines}/>}
         />
         <Route
           exact
@@ -108,15 +119,6 @@ const App = () => {
             token={token}
             fetchActivities={fetchActivities}/>}
         />
-
-        {/* <MyRoutines />
-      </Route>
-      <Route exact path="/activities">
-        <Activities />
-      </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route> */}
       </Routes>
     </div>
   );

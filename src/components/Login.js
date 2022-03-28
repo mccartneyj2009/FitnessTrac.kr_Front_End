@@ -4,60 +4,61 @@ import { BASE_URL } from "../App";
 
 import "./css/RegisterLogin.css";
 
-const Login = ({ setToken }) => {
+const Login = ({user,setToken,setUser,fetchUser}) => {
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const navigate = useNavigate();
-    const lsToken = localStorage.getItem("token");
+    const handleLoginUser = async (e) => {
+        e.preventDefault();
 
-    const handleLoginUser = async () => {
-        setError("");
         const resp = await fetch(`${BASE_URL}api/users/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username: username,
-                password: password,
+                username,
+                password,
             }),
         });
         const info = await resp.json();
 
-        if (info.error) {
-            setError(info.error);
-            return;
+        localStorage.setItem("token", info.token);
+
+        if(info.error) {
+            setError(info.message)
         }
 
-        localStorage.setItem("token", info.token);
-        setToken(info.token);
-
-        navigate("/");
+        fetchUser();
+        
     };
 
-    if (lsToken) {
-        return <Navigate replace to="/" />;
+    if(!user.error) {
+        return <div className="logged-in">
+            <div>
+                <h1>You are currently logged in as {user.username}</h1>
+                <button
+                    onClick={() => {
+                        setToken("");
+                        setUser({});
+                        localStorage.removeItem("token");
+                        setUsername("");
+                        setPassword("");
+                        fetchUser();
+                    }}
+                >
+                    Log out
+                </button>
+            </div>
+        </div>
     }
 
     return (
         <div className="register-login_main">
             <form
-                onSubmit={(e) => {
-                    e.preventDefault();
-
-                    // if (password !== confirm) {
-                    //     return setError("Passwords do not match.");
-                    // }
-                    // if (password.length < 8) {
-                    //     return setError(
-                    //         "Password must be atleast 8 characters in length."
-                    //     );
-                    // }
-
-                    handleLoginUser();
-                }}
+                onSubmit={handleLoginUser}
             >
                 <h1>Log In</h1>
                 <label htmlFor="username">Username</label>
@@ -67,7 +68,6 @@ const Login = ({ setToken }) => {
                     placeholder="Username*"
                     onChange={(e) => {
                         setUsername(e.target.value);
-                        setError("");
                     }}
                 ></input>
                 {error.length ? <p>{error}</p> : null}
@@ -78,7 +78,6 @@ const Login = ({ setToken }) => {
                     placeholder="Password*"
                     onChange={(e) => {
                         setPassword(e.target.value);
-                        setError("");
                     }}
                 ></input>
                 <button>Login</button>

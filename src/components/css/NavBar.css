@@ -11,7 +11,6 @@
   padding: 0.5rem;
   color: #1866e1;
   font-size: 2.5rem;
-  /* text-shadow: 5px 5px 5px black; */
 }
 
 .navbar_links_container {
@@ -27,7 +26,6 @@
   margin: 0.5rem;
   padding: 0.5rem;
   background-color: #1866e1;
-  /* border: solid 2px #ea21ce; */
 }
 
 .navbar_links_container a:hover {

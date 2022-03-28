@@ -1,20 +1,49 @@
 .myroutines_main {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .myroutines_title-link {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin: 2rem;
   color: #1866e1;
+}
+
+.myroutines_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: #1866e1 solid 2px;
+  margin: 1rem;
+  padding: 0.5rem;
+  box-shadow: 5px 5px 5px gray;
+}
+
+.myroutines_creator-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+.myroutines_creator-title h2 {
+  color: #e7991e;
+  margin: 0.5rem;
+}
+
+.myroutines_creator-title span {
+  color: #1866e1;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 .myroutines_add_link {
   text-decoration: none;
   color: #e7991e;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 50%;
