@@ -1,16 +1,10 @@
-import { useParams } from "react-router-dom"
+import { useState } from "react";
+import { BASE_URL } from "../App";
 
 
 const AddMyRoutineActivity = () => {
 
-    // const {id} = useParams();
-
-    // const fetchRoutineById = () => {
-        
-    // }
-
-    // console.log(id)
-    return <h1>hi</h1>
+   return <h1>hi</h1>
 }
 
 export default AddMyRoutineActivity;

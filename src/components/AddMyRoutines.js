@@ -34,6 +34,8 @@ const AddMyRoutines = ({fetchRoutines}) => {
         return info
     }
 
+
+
     return (
         <div className="myroutines_add_form">
             <form
