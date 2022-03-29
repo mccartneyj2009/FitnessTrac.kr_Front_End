@@ -5,6 +5,7 @@ import { BASE_URL } from "../App";
 const AddMyRoutines = ({fetchRoutines}) => {
     const [name, setName] = useState("");
     const [goal, setGoal] = useState("");
+    const [error, setError] = useState("");
 
     const addRoutineHandler = async(e) => {
         e.preventDefault();
@@ -24,12 +25,14 @@ const AddMyRoutines = ({fetchRoutines}) => {
 
         const info = await resp.json();
 
+        if(info.error) {
+            setError(error.message);
+        }
+
         setName("");
         setGoal("");
 
         fetchRoutines();
-
-        console.log(info)
 
         return info
     }
@@ -59,6 +62,7 @@ const AddMyRoutines = ({fetchRoutines}) => {
                 />
                 <button>(+ Add)</button>
             </form>
+            <p>{error}</p>
         </div>
     )
 }

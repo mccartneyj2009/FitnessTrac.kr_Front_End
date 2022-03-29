@@ -1,0 +1,18 @@
+.routine-activity_main {
+  display: flex;
+  justify-content: center;
+}
+
+.routine-activity_main input {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  width: 15rem;
+  border: #1866e1 solid 1.5px;
+}
+
+.routine-activity_main button {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  background-color: #e7991e;
+  border: none;
+}

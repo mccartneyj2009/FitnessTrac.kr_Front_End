@@ -3,13 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
 
 
-const UpdateRoutine = ({fetchRoutines}) => {
+const UpdateRoutine = ({fetchRoutines,routineInfo}) => {
     const {id} = useParams();
 
     const navigate = useNavigate();
 
-    const [name, setName] = useState("");
-    const [goal, setGoal] = useState("");
+    const [name, setName] = useState(routineInfo?.name);
+    const [goal, setGoal] = useState(routineInfo?.goal);
     const [error, setError] = useState("");
 
     const updateRoutineHandler = async(e) => {
