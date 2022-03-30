@@ -63,6 +63,7 @@ const Register = ({ setToken }) => {
                 <input
                     id="username"
                     type="text"
+                    required
                     onChange={(e) => {
                         setUsername(e.target.value);
                         setError("");
@@ -73,6 +74,7 @@ const Register = ({ setToken }) => {
                 <input
                     id="password"
                     type="password"
+                    required
                     onChange={(e) => {
                         setPassword(e.target.value);
                         setError("");
@@ -82,6 +84,7 @@ const Register = ({ setToken }) => {
                 <input
                     id="confirm-password"
                     type="password"
+                    required
                     onChange={(e) => {
                         setConfirm(e.target.value);
                         setError("");

@@ -1,18 +1,8 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
-
 import "./css/NavBar.css";
 
-//will need tokens and user
-//add my routines & logout option after getting user
-const NavBar = () => {
-    const lsToken = localStorage.getItem("token");
-
-    useEffect(() => {
-        lsToken = localStorage.getItem("token");
-    }, [lsToken]);
-
-    if (lsToken) {
+const NavBar = ({ token, user, setToken }) => {
+    if (token) {
         return (
             <>
                 <Link to="/">Home</Link>
@@ -20,43 +10,26 @@ const NavBar = () => {
                 <Link to="/activities">Activities</Link>
                 <Link
                     to="/"
+                    replace
                     onClick={() => {
                         localStorage.removeItem("token");
+                        setToken("");
                     }}
                 >
                     Logout
                 </Link>
             </>
         );
-    }
-
-    if (lsToken) {
+    } else {
         return (
             <>
                 <Link to="/">Home</Link>
                 <Link to="/routines">Routines</Link>
                 <Link to="/activities">Activities</Link>
-                <Link to="/myroutines"> My Routines</Link>
-                <Link
-                    to="/"
-                    onClick={() => {
-                        localStorage.removeItem("token");
-                    }}
-                >
-                    Logout
-                </Link>
+                <Link to="/register">Register</Link>
+                <Link to="/login">Login</Link>
             </>
         );
     }
-
-    return (
-        <>
-            <Link to="/">Home</Link>
-            <Link to="/routines">Routines</Link>
-            <Link to="/activities">Activities</Link>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
-        </>
-    );
 };
 export default NavBar;

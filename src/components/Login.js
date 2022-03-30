@@ -45,16 +45,6 @@ const Login = ({ setToken }) => {
                 className="app-form"
                 onSubmit={(e) => {
                     e.preventDefault();
-
-                    // if (password !== confirm) {
-                    //     return setError("Passwords do not match.");
-                    // }
-                    // if (password.length < 8) {
-                    //     return setError(
-                    //         "Password must be atleast 8 characters in length."
-                    //     );
-                    // }
-
                     handleLoginUser();
                 }}
             >
@@ -62,6 +52,7 @@ const Login = ({ setToken }) => {
                 <input
                     id="username"
                     type="text"
+                    required
                     onChange={(e) => {
                         setUsername(e.target.value);
                         setError("");
@@ -72,6 +63,7 @@ const Login = ({ setToken }) => {
                 <input
                     id="password"
                     type="password"
+                    required
                     onChange={(e) => {
                         setPassword(e.target.value);
                         setError("");

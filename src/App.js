@@ -40,20 +40,20 @@ const App = () => {
         const lstoken = localStorage.getItem("token");
         if (lstoken) {
             setToken(lstoken);
-        }
-        const resp = await fetch(
-            "http://fitnesstrac-kr.herokuapp.com/api/users/me",
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${lstoken}`,
-                },
+            const resp = await fetch(
+                "http://fitnesstrac-kr.herokuapp.com/api/users/me",
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${lstoken}`,
+                    },
+                }
+            );
+            const info = await resp.json();
+            // console.log(info);
+            if (info) {
+                setUser(info);
             }
-        );
-        const info = await resp.json();
-        // console.log(info);
-        if (info) {
-            setUser(info);
         }
     };
 
@@ -63,11 +63,10 @@ const App = () => {
         fetchActivities();
     }, [token]);
 
-    //   console.log(fetchRoutines);
     return (
         <div>
             <div>
-                <NavBar />
+                <NavBar token={token} setToken={setToken} user={user} />
             </div>
 
             <Routes>
