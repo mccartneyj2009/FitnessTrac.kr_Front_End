@@ -2,16 +2,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1866e1;
+  background-color: white;
   box-shadow: 5px 5px 5px gray;
 }
 
 .navbar_main h1 {
   margin: 0.5rem;
   padding: 0.5rem;
-  color: white;
+  color: #1866e1;
   font-size: 2.5rem;
-  text-shadow: 5px 5px 5px black;
 }
 
 .navbar_links_container {
@@ -22,15 +21,14 @@
 
 .navbar_links_container a {
   text-decoration: none;
-  color: black;
+  color: white;
   font-size: 1.2rem;
   margin: 0.5rem;
   padding: 0.5rem;
-  background-color: #e7991e;
-  border: solid 2px #ea21ce;
+  background-color: #1866e1;
 }
 
 .navbar_links_container a:hover {
-  background-color: #1866e1;
-  color: #e7991e;
+  background-color: #e7991e;
+  color: #1866e1;
 }

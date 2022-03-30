@@ -1,0 +1,9 @@
+main h1 {
+  width: 100%;
+  text-align: center;
+  margin: 8rem 0;
+  padding: 2rem 0;
+  color: #1866e1;
+  border-bottom: #e7991e solid 2px;
+  border-top: #e7991e solid 2px;
+}

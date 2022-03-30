@@ -1,163 +1,221 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "../App";
+import AddActivity from "./AddActivity";
+import AddMyRoutineActivity from "./AddMyRoutineActivity";
+import AddMyRoutines from "./AddMyRoutines";
 
-const MyRoutines = ({ token, user }) => {
-    const [userRoutines, setUserRoutines] = useState([]);
-    const [createdRoutine, setCreatedRoutine] = useState([]);
-    const [name, setName] = useState("");
-    const [goal, setGoal] = useState("");
+import "./css/MyRoutines.css";
+import UpdateMyRoutineActivity from "./UpdateMyRoutineActivity";
+import UpdateRoutine from "./UpdateRoutine";
 
-    //will need token here
+const MyRoutines = ({ user, fetchRoutines, routines }) => {
+    const [routineInfo, setRoutineInfo] = useState({});
+    const [routineId, setRoutineId] = useState("");
 
-    // console.log(user);
-    //show form to create new routine with text fields for name and goal
-    //each routine should be able to update name and goal,
-    //delete entire routine,
-    //add an activity to a routine via small form which has a dropdown
-    //for all activities, and inputs for count and duration
-    //update duration or count of any activity
+    const [routineActivity, setRoutineActivity] = useState({});
 
-    //be able to remove activity from the routine
+    const userId = user?.id;
 
-    const fetchUserRoutines = async () => {
-        // console.log(user);
-        //need the username to pass in
-        if (user) {
-            const resp = await fetch(
-                `http://fitnesstrac-kr.herokuapp.com/api/users/${user.username}/routines`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            const info = await resp.json();
-            console.log(info);
-            setUserRoutines(info);
+    const navigate = useNavigate();
+
+    const filteredRoutines = routines.filter((routine) => {
+        if (routine.creatorId === userId) {
+            return true;
         }
+    });
+
+    const deleteRoutineHandler = async (routineId) => {
+        const lstoken = localStorage.getItem("token");
+        const resp = await fetch(`${BASE_URL}api/routines/${routineId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${lstoken}`,
+            },
+        });
+
+        const info = await resp.json();
+
+        fetchRoutines();
+
+        return info;
     };
 
-    const createNewRoutine = async (token) => {
+    const deleteRoutineActivityHandler = async (routineActivityId) => {
+        const lstoken = localStorage.getItem("token");
         const resp = await fetch(
-            "http://fitnesstrac-kr.herokuapp.com/api/routines",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    name,
-                    goal,
-                    isPublic: true,
-                }),
-            }
-        );
-        const info = await resp.json();
-        setCreatedRoutine(info);
-
-        setName("");
-        setGoal("");
-    };
-
-    const updateRoutine = async () => {
-        const resp = fetch(
-            "http://fitnesstrac-kr.herokuapp.com/api/routines/6",
-            {
-                method: "PATCH",
-                body: JSON.stringify({
-                    name: "Long Cardio Day",
-                    goal: "To get your heart pumping!",
-                }),
-            }
-        );
-        const info = await resp.json();
-        setUserRoutines(info);
-    };
-
-    const deleteRoutine = async (routineId) => {
-        const resp = fetch(
-            `http://fitnesstrac-kr.herokuapp.com/api/routines/${routineId}`,
+            `${BASE_URL}api/routine_activities/${routineActivityId}`,
             {
                 method: "DELETE",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                    "Content-type": "application/json",
+                    Authorization: `Bearer ${lstoken}`,
                 },
             }
         );
+
         const info = await resp.json();
-        if (info) {
-            const newRoutines = userRoutines.filter(
-                (routine) => routine.id !== routineId
-            );
-            setUserRoutines(newRoutines);
-        }
+
+        fetchRoutines();
+
+        return info;
     };
 
-    // console.log(userRoutines);
-    useEffect(() => {
-        fetchUserRoutines();
-    }, [user]);
-
-    if (!user) {
-        return <div></div>;
-    }
-
     return (
-        <>
-            <h1>My Routines</h1>
-
-            <h2>Create Routine</h2>
-            <form>
-                <label>
-                    Name
-                    <input
-                        required
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+        <div className="myroutines_main">
+            <div className="myroutines_title-link">
+                <h1>My Routines</h1>
+                {user && (
+                    <Link
+                        className="myroutines_add_link"
+                        to="/myroutines/addRoutine"
+                    >
+                        ( + New Routine )
+                    </Link>
+                )}
+            </div>
+            <div>
+                <Routes>
+                    <Route
+                        path="/addRoutine"
+                        element={
+                            <AddMyRoutines fetchRoutines={fetchRoutines} />
+                        }
                     />
-                </label>
-                <label>
-                    Goal
-                    <input
-                        required
-                        type="text"
-                        value={goal}
-                        onChange={(e) => {
-                            setGoal(e.target.value);
-                        }}
-                    ></input>
-                </label>
-                <button type="submit" onClick={createNewRoutine}>
-                    Submit
-                </button>
-            </form>
+                </Routes>
+            </div>
+            <div>
+                <Routes>
+                    <Route
+                        path="updateRoutine/:id"
+                        element={
+                            <UpdateRoutine
+                                fetchRoutines={fetchRoutines}
+                                routineInfo={routineInfo}
+                            />
+                        }
+                    />
+                </Routes>
+            </div>
 
-            {userRoutines.map((routine) => (
-                <div key={routine.id} id="routines">
-                    <h2>{routine.name}</h2>
-                    <h3>Goal: {routine.goal}</h3>
-                    {routine.activities.map((activity) => (
-                        <div key={activity.id}>
-                            <h3>Activities: {activity.name}</h3>
-                            <h4>Description: {activity.description}</h4>
-                            <p>Count: {activity.count}</p>
-                            <p>Duration: {activity.duration}</p>
-                            <button
-                                value={routine.id}
-                                onClick={(e) => {
-                                    const id = e.target.value;
-                                    deleteRoutine(id);
-                                }}
-                            >
-                                Delete Routine
-                            </button>
+            <div>
+                <Routes>
+                    <Route
+                        path="updateActivity"
+                        element={
+                            <UpdateMyRoutineActivity
+                                routineActivity={routineActivity}
+                                fetchRoutines={fetchRoutines}
+                            />
+                        }
+                    />
+                </Routes>
+            </div>
+
+            <div>
+                {filteredRoutines?.map((routine) => {
+                    console.log(routine);
+                    return (
+                        <div key={routine.id} className="myroutines_container">
+                            <div className="position-left">
+                                <div className="myroutines_creator-title">
+                                    <h2>{routine.name.toUpperCase()}</h2>
+                                    <span>( {routine.creatorName} )</span>
+                                </div>
+
+                                {routine.activities.map((activity) => (
+                                    <div
+                                        key={activity.id}
+                                        className="myroutines_activities_container"
+                                    >
+                                        <p className="myroutines_activities_title">
+                                            {activity.name}
+                                        </p>
+                                        <p>
+                                            <span>Count: </span>
+                                            {activity.count}
+                                        </p>
+                                        <p>
+                                            <span>Duration: </span>
+                                            {activity.duration}
+                                        </p>
+                                        <p>{activity.description}</p>
+                                        <div>
+                                            <Link
+                                                onClick={() => {
+                                                    setRoutineActivity(
+                                                        activity
+                                                    );
+                                                }}
+                                                to="/myroutines/updateActivity"
+                                            >
+                                                Update
+                                            </Link>
+                                            <button
+                                                onClick={() => {
+                                                    deleteRoutineActivityHandler(
+                                                        activity?.routineActivityId
+                                                    );
+                                                }}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div>
+                                    <Routes>
+                                        <Route
+                                            path="/addActivity"
+                                            element={
+                                                <AddMyRoutineActivity
+                                                    fetchRoutines={
+                                                        fetchRoutines
+                                                    }
+                                                    routineId={routineId}
+                                                />
+                                            }
+                                        />
+                                    </Routes>
+                                </div>
+                                <p className="routines_goal">
+                                    <span>Goal:</span>
+                                    {routine.goal}
+                                </p>
+                            </div>
+                            <div className="position-right">
+                                <Link
+                                    onClick={() => {
+                                        fetchRoutines();
+                                        setRoutineInfo(routine);
+                                    }}
+                                    to={`updateRoutine/${routine.id}`}
+                                >
+                                    Update Routine
+                                </Link>
+                                <button
+                                    onClick={() => {
+                                        deleteRoutineHandler(routine?.id);
+                                        navigate("/myroutines");
+                                    }}
+                                >
+                                    Delete Routine
+                                </button>
+                                <Link
+                                    onClick={() => {
+                                        setRoutineId(`${routine?.id}`);
+                                    }}
+                                    to={`/myroutines/addActivity`}
+                                >
+                                    New Activity
+                                </Link>
+                            </div>
                         </div>
-                    ))}
-                </div>
-            ))}
-        </>
+                    );
+                })}
+            </div>
+        </div>
     );
 };
 

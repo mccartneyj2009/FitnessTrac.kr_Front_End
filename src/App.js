@@ -13,7 +13,7 @@ const App = () => {
     const [routines, setRoutines] = useState([]);
     const [activities, setActivities] = useState([]);
     const [token, setToken] = useState("");
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
 
     const fetchRoutines = async () => {
         const resp = await fetch(
@@ -30,7 +30,11 @@ const App = () => {
     };
 
     const fetchActivities = async () => {
-        const resp = await fetch(`${BASE_URL}api/activities`);
+        const resp = await fetch(`${BASE_URL}api/activities`, {
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         const info = await resp.json();
 
         setActivities(info);
@@ -40,37 +44,36 @@ const App = () => {
         const lstoken = localStorage.getItem("token");
         if (lstoken) {
             setToken(lstoken);
-            const resp = await fetch(
-                "http://fitnesstrac-kr.herokuapp.com/api/users/me",
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${lstoken}`,
-                    },
-                }
-            );
-            const info = await resp.json();
-            // console.log(info);
-            if (info) {
-                setUser(info);
-            }
         }
+        const resp = await fetch(`${BASE_URL}api/users/me`, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${lstoken}`,
+            },
+        });
+        const info = await resp.json();
+        // console.log(info);
+        if (info) {
+            setUser(info);
+        }
+
+        return info;
     };
 
     useEffect(() => {
         fetchUser();
         fetchRoutines();
         fetchActivities();
-    }, [token]);
+    }, []);
 
     return (
         <div>
             <div>
-                <NavBar token={token} setToken={setToken} user={user} />
+                <NavBar />
             </div>
 
             <Routes>
-                <Route exact path="/" element={<HomePage />} />
+                <Route exact path="/" element={<HomePage user={user} />} />
                 <Route
                     exact
                     path="/routines"
@@ -89,21 +92,39 @@ const App = () => {
                 <Route
                     exact
                     path="/login"
-                    element={<Login setToken={setToken} />}
+                    element={
+                        <Login
+                            setUser={setUser}
+                            user={user}
+                            setToken={setToken}
+                            fetchUser={fetchUser}
+                        />
+                    }
                 />
                 <Route
                     exact
-                    path="/myroutines"
-                    element={<MyRoutines token={token} user={user} />}
+                    path="/myroutines/*"
+                    element={
+                        <MyRoutines
+                            token={token}
+                            user={user}
+                            fetchRoutines={fetchRoutines}
+                            routines={routines}
+                        />
+                    }
                 />
-                {/* <MyRoutines />
-      </Route>
-      <Route exact path="/activities">
-        <Activities />
-      </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route> */}
+                <Route
+                    exact
+                    path="/activities/*"
+                    element={
+                        <Activities
+                            activities={activities}
+                            user={user}
+                            token={token}
+                            fetchActivities={fetchActivities}
+                        />
+                    }
+                />
             </Routes>
         </div>
     );

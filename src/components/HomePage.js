@@ -1,8 +1,13 @@
-const HomePage = () => {
+
+import "./css/HomePage.css";
+
+const HomePage = ({user}) => {
   return (
-    <>
-      <h1>Welcome to Fitness Track.kr!</h1>
-    </>
+
+    <main>
+        <h1>Welcome to Fitness Track.kr {user?.username}!</h1>
+    </main>
+    
   );
 };
 

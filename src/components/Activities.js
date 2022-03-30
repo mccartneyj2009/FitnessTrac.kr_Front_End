@@ -1,20 +1,57 @@
-import { useState } from "react";
-
-const BASE_URL = `https://fitnesstrac-kr.herokuapp.com/api`;
 
 
-const Activities = ({setActivities, activities}) => {
-    console.log(activities)
-    return <>
+import { Link, Route, Routes } from "react-router-dom";
+import AddActivity from "./AddActivity";
+import "./css/Activities.css";
 
-        {activities?.map(activity => {
-            return <div key={activity.id}>
-                <h3>Name: {activity.name}</h3>
-                <h3>Description: {activity.description}</h3>
+const Activities = ({activities,user,token,fetchActivities}) => {
+
+    return (
+        <div className="activities_main">
+            <div className="activities_title-link">
+                <h1>Activities</h1>
+                {!user.error && 
+                    <Link 
+                        className="activities_add_link" 
+                        to="/activities/add">
+                            ( + New Activity )
+                    </Link>
+                }
             </div>
-        })}
-    
-    </>
+
+            <div>
+                <Routes>
+                    <Route 
+                        path="/add" 
+                        element={<AddActivity 
+                            token={token}
+                            fetchActivities={fetchActivities}/>}
+                    />
+                </Routes>
+            </div>
+
+            <div className="activities_container">
+                {activities?.map(activity => {
+                    return (
+                        <div 
+                            key={activity.id} 
+                            className="activities_content"
+                        >
+                            <p>
+                                <span>Name: </span>
+                                {activity.name}
+                            </p>
+                            <p>
+                                <span>Description: </span>
+                                {activity.description}
+                            </p>
+                        </div>
+                    )
+                })}
+            </div>
+            
+        </div>
+    )
 
 }
 

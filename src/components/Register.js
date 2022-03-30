@@ -59,11 +59,12 @@ const Register = ({ setToken }) => {
                     handleRegisterUser();
                 }}
             >
+                <h1>Sign up</h1>
                 <label htmlFor="username">Username</label>
                 <input
                     id="username"
                     type="text"
-                    required
+                    placeholder="Username*"
                     onChange={(e) => {
                         setUsername(e.target.value);
                         setError("");
@@ -74,27 +75,30 @@ const Register = ({ setToken }) => {
                 <input
                     id="password"
                     type="password"
-                    required
+                    placeholder="Password*"
+                    value={password}
                     onChange={(e) => {
                         setPassword(e.target.value);
                         setError("");
                     }}
                 ></input>
                 <label htmlFor="confirm-password">Confirm Password</label>
-                <input
-                    id="confirm-password"
-                    type="password"
-                    required
-                    onChange={(e) => {
-                        setConfirm(e.target.value);
-                        setError("");
-                    }}
-                ></input>
+                {password.length !== 0 && (
+                    <input
+                        id="confirm-password"
+                        type="password"
+                        placeholder="Confirm Password*"
+                        onChange={(e) => {
+                            setConfirm(e.target.value);
+                            setError("");
+                        }}
+                    ></input>
+                )}
                 <button>Register</button>
+                <p>
+                    Already have an accout? <Link to="/login">Login</Link>
+                </p>
             </form>
-            <p>
-                Already have an accout? <Link to="/login">Login</Link>
-            </p>
         </div>
     );
 };

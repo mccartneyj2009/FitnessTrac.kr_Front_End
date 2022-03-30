@@ -13,11 +13,11 @@
   width: 400px;
   background-color: #e7991e;
   border-radius: 10px;
-  box-shadow: 5px 5px 5px #ea21ce;
 }
 
 .register-login_main form h1 {
   margin: 2rem 0;
+  color: #1866e1;
 }
 
 .register-login_main form label {
@@ -43,5 +43,35 @@
   margin-bottom: 1rem 0;
   font-weight: bold;
   font-size: 1.2rem;
-  color: #a221ea;
+  color: #1866e1;
+}
+
+.logged-in {
+  display: flex;
+  justify-content: center;
+  margin: 8rem 0;
+  border-top: #1866e1 solid 2px;
+  border-bottom: #1866e1 solid 2px;
+}
+
+.logged-in div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.logged-in h1 {
+  margin: 1rem;
+  color: #e7991e;
+}
+
+.logged-in button {
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  width: 8rem;
+  background-color: #1866e1;
+  border: none;
+  color: white;
+  box-shadow: 5px 5px 5px gray;
 }
