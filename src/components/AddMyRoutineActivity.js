@@ -84,7 +84,7 @@ const AddMyRoutineActivity = ({
                         }}
                     >
                         <option key="default" value="default" disabled>
-                            Select an Activity
+                            -- Select an Activity --
                         </option>
                         {activities.map((activity) => {
                             return (
@@ -125,8 +125,9 @@ const AddMyRoutineActivity = ({
                     >
                         Cancel
                     </button>
+                    <p>{error ? error : null}</p>
                 </form>
-                <p>{error ? error : null}</p>
+                
             </div>
         );
     } else {
