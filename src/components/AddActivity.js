@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../App";
 
 
@@ -8,6 +9,8 @@ const AddActivity = ({token,fetchActivities}) => {
     const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     const addActivityHandler = async (e) => {
         e.preventDefault();
@@ -62,6 +65,13 @@ const AddActivity = ({token,fetchActivities}) => {
                 />
                 <button>
                     (+ Add)
+                </button>
+                <button
+                    onClick={() => {
+                        navigate("/activities");
+                    }}
+                >
+                    Cancel
                 </button>
             </form>
             <div className="activities_add_error">

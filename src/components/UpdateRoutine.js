@@ -67,6 +67,13 @@ const UpdateRoutine = ({fetchRoutines,routineInfo}) => {
         <button>
             Update
         </button>
+        <button
+            onClick={() => {
+                navigate("/myroutines")
+            }}
+        >
+            Cancel
+        </button>
     </form>
     <div>
         {error}
