@@ -83,7 +83,7 @@ const Register = ({ setToken }) => {
                     }}
                 ></input>
                 <label htmlFor="confirm-password">Confirm Password</label>
-                {password.length !== 0 &&
+                {password.length !== 0 && (
                     <input
                         id="confirm-password"
                         type="password"
@@ -93,13 +93,12 @@ const Register = ({ setToken }) => {
                             setError("");
                         }}
                     ></input>
-                }
+                )}
                 <button>Register</button>
                 <p>
                     Already have an accout? <Link to="/login">Login</Link>
                 </p>
             </form>
-            
         </div>
     );
 };
