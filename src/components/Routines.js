@@ -7,7 +7,7 @@ const Routines = ({routines}) => {
 
       <h1>Routines</h1>
 
-      {routines.map((routine) => (
+      {routines?.map((routine) => (
         
         <div key={routine.id} id="routines" className="routines_container">
           <div className="routines_creator-title">

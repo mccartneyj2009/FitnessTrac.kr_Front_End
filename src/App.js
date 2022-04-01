@@ -17,7 +17,7 @@ const App = () => {
 
   const fetchRoutines = async () => {
     const resp = await fetch(
-      "http://fitnesstrac-kr.herokuapp.com/api/routines",
+      `${BASE_URL}api/routines`,
       {
         headers: {
           "Content-Type": "application/json",
