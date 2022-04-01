@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
 import AddActivity from "./AddActivity";
@@ -12,8 +12,8 @@ import UpdateRoutine from "./UpdateRoutine";
 const MyRoutines = ({ user, fetchRoutines, routines }) => {
     const [routineInfo, setRoutineInfo] = useState({});
     const [routineId, setRoutineId] = useState("");
-
     const [routineActivity, setRoutineActivity] = useState({});
+    const [clickedId, setClickedId] = useState("");
 
     const userId = user?.id;
 
@@ -62,6 +62,10 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
         return info;
     };
 
+    useEffect(() => {
+        fetchRoutines();
+    }, []);
+
     return (
         <div className="myroutines_main">
             <div className="myroutines_title-link">
@@ -98,7 +102,6 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                     />
                 </Routes>
             </div>
-
             <div>
                 <Routes>
                     <Route
@@ -112,10 +115,8 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                     />
                 </Routes>
             </div>
-
             <div>
                 {filteredRoutines?.map((routine) => {
-                    console.log(routine);
                     return (
                         <div key={routine.id} className="myroutines_container">
                             <div className="position-left">
@@ -183,6 +184,14 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                                     <span>Goal:</span>
                                     {routine.goal}
                                 </p>
+                                {
+                                    <AddMyRoutineActivity
+                                        routineId={routine.id}
+                                        fetchRoutines={fetchRoutines}
+                                        clickedId={clickedId}
+                                        setClickedId={setClickedId}
+                                    />
+                                }
                             </div>
                             <div className="position-right">
                                 <Link
@@ -202,14 +211,21 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                                 >
                                     Delete Routine
                                 </button>
-                                <Link
+                                <button
+                                    onClick={(e) => {
+                                        setClickedId(routine.id);
+                                    }}
+                                >
+                                    New Activity
+                                </button>
+                                {/* <Link
                                     onClick={() => {
                                         setRoutineId(`${routine?.id}`);
                                     }}
                                     to={`/myroutines/addActivity`}
                                 >
                                     New Activity
-                                </Link>
+                                </Link> */}
                             </div>
                         </div>
                     );
