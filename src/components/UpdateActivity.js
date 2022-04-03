@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
 
@@ -11,6 +11,7 @@ const UpdateActivity = ({activityInfo, fetchActivities}) => {
     const navigate = useNavigate();
 
     const [description, setDescription] = useState(activityInfo?.description);
+    const [error, setError] = useState("");
 
     const editActivityHandler = async(e) => {
         e.preventDefault();
@@ -29,7 +30,11 @@ const UpdateActivity = ({activityInfo, fetchActivities}) => {
 
             const info = await resp.json();
 
-            if(info) {
+            if(info.error) {
+                setError("Sorry you have to be logged in to update an activity");
+            }
+
+            if(!info.error) {
                 navigate("/activities");
             }
 
@@ -68,6 +73,7 @@ const UpdateActivity = ({activityInfo, fetchActivities}) => {
         >
             Cancel
         </button>
+        <p>{error}</p>
     </form>
 }
 
