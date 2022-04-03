@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./css/Routines.css";
 
 const Routines = ({routines}) => {
@@ -8,11 +9,14 @@ const Routines = ({routines}) => {
       <h1>Routines</h1>
 
       {routines?.map((routine) => (
-        
         <div key={routine.id} id="routines" className="routines_container">
           <div className="routines_creator-title">
-            <h2>{routine.name.toUpperCase()}</h2>
-            <span>( {routine.creatorName} )</span>
+            <Link
+              to={`/routines/${routine.creatorName}/${routine.creatorId}`}
+            >
+              <h2>{routine.name.toUpperCase()}</h2>
+              <span>( {routine.creatorName} )</span>
+            </Link>
           </div>
 
           {routine.activities.map((activity) => (

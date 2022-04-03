@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import "./css/NavBar.css";
 
-//will need tokens and user
-//add my routines & logout option after getting user
 const NavBar = () => {
     const lsToken = localStorage.getItem("token");
 

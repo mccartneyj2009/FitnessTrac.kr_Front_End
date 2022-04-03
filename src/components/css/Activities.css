@@ -32,6 +32,11 @@
   font-size: 1.2rem;
 }
 
+.activities_content a {
+  text-decoration: none;
+  color: #1866e1;
+}
+
 .activities_content span {
   font-weight: bold;
   color: #e7991e;
@@ -50,6 +55,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.activities_add_form p {
+  color: #1866e1;
+  font-size: 1.5rem;
 }
 
 .activities_add_form input {

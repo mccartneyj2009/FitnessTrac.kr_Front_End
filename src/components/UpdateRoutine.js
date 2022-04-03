@@ -14,35 +14,43 @@ const UpdateRoutine = ({fetchRoutines,routineInfo}) => {
 
     const updateRoutineHandler = async(e) => {
         e.preventDefault();
-        const lstoken = localStorage.getItem("token");
-        const resp = await fetch(`${BASE_URL}api/routines/${id}`, {
-            method:"PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${lstoken}`
-            },
-            body: JSON.stringify({
-                name,
-                goal,
-                isPublic: true
-            })
-        });
+        try {
+            const lstoken = localStorage.getItem("token");
+            const resp = await fetch(`${BASE_URL}api/routines/${id}`, {
+                method:"PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${lstoken}`
+                },
+                body: JSON.stringify({
+                    name,
+                    goal,
+                    isPublic: true
+                })
+            });
 
-        const info = await resp.json();
+            const info = await resp.json();
 
-        if(info.error) {
-            setError(info.message)
+            if(info){
+                navigate("/myroutines");
+            }
+
+            if(info.error) {
+                setError(info.message)
+            }
+
+            setName("");
+            setGoal("");
+
+            fetchRoutines();
+
+            return info;
+
+        } catch (error) {
+            throw error;
         }
-
-        setName("");
-        setGoal("");
-
-        fetchRoutines();
-
-        navigate("/myroutines");
-
-        return info
-    }
+        
+    };
 
     return <div className="myroutines_update_form">
     <form

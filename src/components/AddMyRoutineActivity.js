@@ -19,42 +19,56 @@ const AddMyRoutineActivity = ({
     const navigate = useNavigate();
     const lstoken = localStorage.getItem("token");
 
+
+    const fetchActivities = async () => {
+        try {
+            const resp = await fetch(`${BASE_URL}api/activities`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const info = await resp.json();
+    
+            setActivities(info);
+
+        } catch (error) {
+            throw error;
+        }
+    };
+
     useEffect(() => {
         fetchActivities();
     }, []);
 
-    const fetchActivities = async () => {
-        const resp = await fetch(`${BASE_URL}api/activities`, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const info = await resp.json();
-
-        setActivities(info);
-    };
-
     const routineActivityHandler = async () => {
-        const resp = await fetch(
-            `${BASE_URL}api/routines/${routineId}/activities`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${lstoken}`,
-                },
-                body: JSON.stringify({
-                    activityId,
-                    count,
-                    duration,
-                }),
+        try {
+            const resp = await fetch(
+                `${BASE_URL}api/routines/${routineId}/activities`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${lstoken}`,
+                    },
+                    body: JSON.stringify({
+                        activityId,
+                        count,
+                        duration,
+                    }),
+                }
+            );
+            
+            const info = await resp.json();
+
+            if(info){
+                navigate("/myroutines");
             }
-        );
-        const info = await resp.json();
+    
+            fetchRoutines();
 
-        fetchRoutines();
-
-        navigate("/myroutines");
+        } catch (error) {
+            throw error;
+        }
     };
 
     if (clickedId === routineId) {
@@ -79,7 +93,6 @@ const AddMyRoutineActivity = ({
                         defaultValue="default"
                         required
                         onChange={(e) => {
-                            console.log(e.target.value);
                             setActivityId(e.target.value);
                         }}
                     >

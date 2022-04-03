@@ -22,11 +22,16 @@ body {
   box-shadow: 5px 5px 5px gray;
 }
 
-.routines_creator-title {
+.routines_creator-title a {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 1rem;
+  text-decoration: none;
+}
+
+.routines_creator-title a:hover {
+  font-size: 1.5rem;
 }
 
 .routines_creator-title h2 {
@@ -68,4 +73,46 @@ body {
 .routines_goal span {
   font-weight: bold;
   margin: 0.5rem;
+}
+
+/*-- ViewUserRoutines --*/
+
+.routines_routine-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem;
+}
+.routines_routine-name h2 {
+  color: #e7991e;
+  margin: 0.5rem;
+}
+.routines_user-routines a {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #1866e1;
+  text-decoration: none;
+}
+
+.routines_user-routines a:hover {
+  font-size: 2.5rem;
+}
+
+/*-- ViewRoutineActivities --*/
+.routines_view-routine-activities {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+.routines_view-routine-activities h2 {
+  color: #e7991e;
+  margin: 0.5rem;
+}
+
+.routines_view-routine-activities span {
+  color: #1866e1;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }

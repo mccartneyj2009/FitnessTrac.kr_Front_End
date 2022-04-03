@@ -5,8 +5,6 @@ import { BASE_URL } from "../App";
 import "./css/UpdateMyRoutineActivity.css";
 
 const UpdateMyRoutineActivity = ({routineActivity, fetchRoutines}) => {
-    console.log(routineActivity)
-    
     const [count, setCount] = useState(routineActivity?.count);
     const [duration, setDuration] = useState(routineActivity?.duration);
 
@@ -14,32 +12,37 @@ const UpdateMyRoutineActivity = ({routineActivity, fetchRoutines}) => {
 
     const updateRoutineActivityHandler = async(e) => {
         e.preventDefault();
-        const lstoken = localStorage.getItem("token");
-        const resp = await fetch(`${BASE_URL}api/routine_activities/${routineActivity.routineActivityId}`,{
-            method:"PATCH",
-            headers: {
-                "Content-type": "application/json",
-                "Authorization": `Bearer ${lstoken}`
-            },
-            body: JSON.stringify({
-                count,
-                duration
-            })
-        });
 
-        const info = await resp.json();
+        try {
+            const lstoken = localStorage.getItem("token");
+            const resp = await fetch(`${BASE_URL}api/routine_activities/${routineActivity.routineActivityId}`,{
+                method:"PATCH",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": `Bearer ${lstoken}`
+                },
+                body: JSON.stringify({
+                    count,
+                    duration
+                })
+            });
 
+            const info = await resp.json();
 
-        fetchRoutines();
+            fetchRoutines();
 
-        setCount("");
-        setDuration("");
+            setCount("");
+            setDuration("");
 
-        if(!info.error){
-            navigate("/myroutines");
+            if(!info.error){
+                navigate("/myroutines");
+            }
+
+            return info;
+
+        } catch (error) {
+            throw error;
         }
-
-        return info;
     }
 
     return <div className="update-ra_main">

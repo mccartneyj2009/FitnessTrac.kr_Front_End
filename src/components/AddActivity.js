@@ -6,39 +6,44 @@ import { BASE_URL } from "../App";
 
 const AddActivity = ({token,fetchActivities}) => {
 
-    const [activityName, setActivityName] = useState("");
-    const [activityDescription, setActivityDescription] = useState("");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
     const [error, setError] = useState("");
 
     const navigate = useNavigate();
 
     const addActivityHandler = async (e) => {
         e.preventDefault();
-        const resp = await fetch(`${BASE_URL}api/activities`, {
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                name:`${activityName}`,
-                description:`${activityDescription}`
+        try {
+            const resp = await fetch(`${BASE_URL}api/activities`, {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    name,
+                    description
+                })
             })
-        })
-        const info = await resp.json();
+            const info = await resp.json();
+    
+            setActivityName("");
+            setActivityDescription("");
+    
+            fetchActivities();
+    
+            if(info.error) {
+                setError(info.message)
+            } else {
+                setError("")
+            }
+    
+            return info;
 
-        setActivityName("");
-        setActivityDescription("");
-
-        fetchActivities();
-
-        if(info.error) {
-            setError(info.message)
-        } else {
-            setError("")
+        } catch (error) {
+            throw error;
         }
-
-        return info
     }
 
     return (
@@ -50,17 +55,17 @@ const AddActivity = ({token,fetchActivities}) => {
                 <input 
                     type="text"
                     placeholder="Name"
-                    value={activityName}
+                    value={name}
                     onChange={(e) => {
-                        setActivityName(e.target.value);
+                        setName(e.target.value);
                     }}
                 />
                 <input
                     type="text"
                     placeholder="Description"
-                    value={activityDescription}
+                    value={description}
                     onChange={(e) => {
-                        setActivityDescription(e.target.value)
+                        setDescription(e.target.value)
                     }}
                 />
                 <button>

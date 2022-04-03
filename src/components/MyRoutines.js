@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
-import AddActivity from "./AddActivity";
 import AddMyRoutineActivity from "./AddMyRoutineActivity";
 import AddMyRoutines from "./AddMyRoutines";
 
@@ -11,7 +10,6 @@ import UpdateRoutine from "./UpdateRoutine";
 
 const MyRoutines = ({ user, fetchRoutines, routines }) => {
     const [routineInfo, setRoutineInfo] = useState({});
-    const [routineId, setRoutineId] = useState("");
     const [routineActivity, setRoutineActivity] = useState({});
     const [clickedId, setClickedId] = useState("");
 
@@ -26,45 +24,51 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
     });
 
     const deleteRoutineHandler = async (routineId) => {
-        const lstoken = localStorage.getItem("token");
-        const resp = await fetch(`${BASE_URL}api/routines/${routineId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${lstoken}`,
-            },
-        });
-
-        const info = await resp.json();
-
-        fetchRoutines();
-
-        return info;
-    };
-
-    const deleteRoutineActivityHandler = async (routineActivityId) => {
-        const lstoken = localStorage.getItem("token");
-        const resp = await fetch(
-            `${BASE_URL}api/routine_activities/${routineActivityId}`,
-            {
+        try {
+            const lstoken = localStorage.getItem("token");
+            const resp = await fetch(`${BASE_URL}api/routines/${routineId}`, {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json",
-                    Authorization: `Bearer ${lstoken}`,
+                    "Authorization": `Bearer ${lstoken}`,
                 },
-            }
-        );
+            });
 
-        const info = await resp.json();
+            const info = await resp.json();
 
-        fetchRoutines();
+            fetchRoutines();
 
-        return info;
+            return info;
+
+        } catch (error) {
+            throw error;
+        }
     };
 
-    useEffect(() => {
-        fetchRoutines();
-    }, []);
+    const deleteRoutineActivityHandler = async (routineActivityId) => {
+        try {
+            const lstoken = localStorage.getItem("token");
+            const resp = await fetch(
+                `${BASE_URL}api/routine_activities/${routineActivityId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${lstoken}`,
+                    },
+                }
+            );
+
+            const info = await resp.json();
+
+            fetchRoutines();
+
+            return info;
+
+        } catch (error) {
+            throw error;
+        }
+    };
 
     return (
         <div className="myroutines_main">
@@ -84,7 +88,9 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                     <Route
                         path="/addRoutine"
                         element={
-                            <AddMyRoutines fetchRoutines={fetchRoutines} />
+                            <AddMyRoutines 
+                                fetchRoutines={fetchRoutines} 
+                            />
                         }
                     />
                 </Routes>
@@ -165,21 +171,6 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                                         </div>
                                     </div>
                                 ))}
-                                <div>
-                                    <Routes>
-                                        <Route
-                                            path="/addActivity"
-                                            element={
-                                                <AddMyRoutineActivity
-                                                    fetchRoutines={
-                                                        fetchRoutines
-                                                    }
-                                                    routineId={routineId}
-                                                />
-                                            }
-                                        />
-                                    </Routes>
-                                </div>
                                 <p className="routines_goal">
                                     <span>Goal:</span>
                                     {routine.goal}
@@ -198,6 +189,7 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                                     onClick={() => {
                                         fetchRoutines();
                                         setRoutineInfo(routine);
+                                        window.scrollTo(0,0);
                                     }}
                                     to={`updateRoutine/${routine.id}`}
                                 >
@@ -218,14 +210,6 @@ const MyRoutines = ({ user, fetchRoutines, routines }) => {
                                 >
                                     New Activity
                                 </button>
-                                {/* <Link
-                                    onClick={() => {
-                                        setRoutineId(`${routine?.id}`);
-                                    }}
-                                    to={`/myroutines/addActivity`}
-                                >
-                                    New Activity
-                                </Link> */}
                             </div>
                         </div>
                     );

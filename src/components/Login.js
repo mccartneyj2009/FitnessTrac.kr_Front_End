@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Navigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BASE_URL } from "../App";
 
 import "./css/RegisterLogin.css";
@@ -11,26 +11,30 @@ const Login = ({ user, setToken, setUser, fetchUser }) => {
 
     const handleLoginUser = async (e) => {
         e.preventDefault();
+        try {
+            const resp = await fetch(`${BASE_URL}api/users/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
+            });
+            const info = await resp.json();
+    
+            localStorage.setItem("token", info.token);
+    
+            if (info.error) {
+                setError(info.message);
+            }
+    
+            fetchUser();
 
-        const resp = await fetch(`${BASE_URL}api/users/login`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                password,
-            }),
-        });
-        const info = await resp.json();
-
-        localStorage.setItem("token", info.token);
-
-        if (info.error) {
-            setError(info.message);
+        } catch (error) {
+            throw error;
         }
-
-        fetchUser();
     };
 
     if (!user.error) {

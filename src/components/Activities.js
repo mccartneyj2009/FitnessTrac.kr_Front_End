@@ -1,10 +1,14 @@
 
 
+import { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import AddActivity from "./AddActivity";
 import "./css/Activities.css";
+import UpdateActivity from "./UpdateActivity";
 
 const Activities = ({activities,user,token,fetchActivities}) => {
+
+    const [activityInfo, setActivityInfo] = useState([]);
 
     return (
         <div className="activities_main">
@@ -25,7 +29,20 @@ const Activities = ({activities,user,token,fetchActivities}) => {
                         path="/add" 
                         element={<AddActivity 
                             token={token}
-                            fetchActivities={fetchActivities}/>}
+                            fetchActivities={fetchActivities}
+                        />}
+                    />
+                </Routes>
+            </div>
+
+            <div>
+                <Routes>
+                    <Route
+                        path="/update/:id"
+                        element={<UpdateActivity
+                            activityInfo={activityInfo}
+                            fetchActivities={fetchActivities}
+                        />}
                     />
                 </Routes>
             </div>
@@ -39,11 +56,23 @@ const Activities = ({activities,user,token,fetchActivities}) => {
                         >
                             <p>
                                 <span>Name: </span>
-                                {activity.name}
+                                <Link
+                                    to={`/activities/${activity.id}/routines`}
+                                >
+                                    {activity.name}
+                                </Link>
                             </p>
                             <p>
                                 <span>Description: </span>
-                                {activity.description}
+                                <Link
+                                    onClick={()=>{
+                                        setActivityInfo(activity);
+                                        window.scrollTo(0,0);
+                                    }}
+                                    to={`/activities/update/${activity.id}`}
+                                >
+                                    {activity.description}
+                                </Link>
                             </p>
                         </div>
                     )

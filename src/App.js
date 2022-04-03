@@ -7,6 +7,8 @@ import Login from "./components/Login";
 import NavBar from "./components/NavBar.js";
 import Activities from "./components/Activities.js";
 import MyRoutines from "./components/MyRoutines.js";
+import ViewUserRoutines from "./components/ViewUserRoutines.js";
+import ViewRoutineActivities from "./components/ViewRoutineActivities.js";
 export const BASE_URL = "https://fitnesstrac-kr.herokuapp.com/";
 
 const App = () => {
@@ -15,49 +17,66 @@ const App = () => {
     const [token, setToken] = useState("");
     const [user, setUser] = useState({});
 
-  const fetchRoutines = async () => {
-    const resp = await fetch(
-      `${BASE_URL}api/routines`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        }
-      }
-    );
+    const fetchRoutines = async () => {
+        try {
+            const resp = await fetch(
+                `${BASE_URL}api/routines`,
+                {
+                    headers: {
+                    "Content-Type": "application/json",
+                    }
+                }
+            );
+        
+            const info = await resp.json();
 
-        const info = await resp.json();
-        setRoutines(info);
+            setRoutines(info);
+
+        } catch (error) {
+            throw error;
+        }
     };
 
     const fetchActivities = async () => {
-        const resp = await fetch(`${BASE_URL}api/activities`, {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const info = await resp.json();
-
-        setActivities(info);
+        try {
+            const resp = await fetch(`${BASE_URL}api/activities`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            
+            const info = await resp.json();
+    
+            setActivities(info);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const fetchUser = async () => {
-        const lstoken = localStorage.getItem("token");
-        if (lstoken) {
-            setToken(lstoken);
-        }
-        const resp = await fetch(`${BASE_URL}api/users/me`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${lstoken}`,
-            },
-        });
-        const info = await resp.json();
-        // console.log(info);
-        if (info) {
-            setUser(info);
-        }
+        try {
+            const lstoken = localStorage.getItem("token");
+            if (lstoken) {
+                setToken(lstoken);
+            }
+            const resp = await fetch(`${BASE_URL}api/users/me`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${lstoken}`,
+                },
+            });
 
-        return info;
+            const info = await resp.json();
+
+            if (info) {
+                setUser(info);
+            }
+
+            return info;
+
+        } catch (error) {
+            throw error;
+        }
     };
 
     useEffect(() => {
@@ -71,7 +90,6 @@ const App = () => {
             <div>
                 <NavBar />
             </div>
-
             <Routes>
                 <Route exact path="/" element={<HomePage user={user} />} />
                 <Route
@@ -81,6 +99,15 @@ const App = () => {
                         <Routines
                             routines={routines}
                             setRoutines={setRoutines}
+                        />
+                    }
+                    
+                />
+                <Route
+                    path="/routines/:creatorName/:id"
+                    element={
+                        <ViewUserRoutines
+                            routines={routines}
                         />
                     }
                 />
@@ -123,6 +150,12 @@ const App = () => {
                             token={token}
                             fetchActivities={fetchActivities}
                         />
+                    }
+                />
+                <Route
+                    path="/activities/:id/routines"
+                    element={
+                        <ViewRoutineActivities/>
                     }
                 />
             </Routes>

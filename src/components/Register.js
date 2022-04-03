@@ -13,27 +13,34 @@ const Register = ({ setToken }) => {
 
     const handleRegisterUser = async () => {
         setError("");
-        const resp = await fetch(`${BASE_URL}api/users/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-            }),
-        });
-        const info = await resp.json();
+        try {
+            const resp = await fetch(`${BASE_URL}api/users/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+            });
+            const info = await resp.json();
 
-        if (info.error) {
-            setError(info.error);
-            return;
+            if(info){
+                navigate("/");
+            }
+    
+            if (info.error) {
+                setError(info.error);
+                return;
+            }
+    
+            localStorage.setItem("token", info.token);
+            setToken(info.token);
+
+        } catch (error) {
+            throw error;
         }
-
-        localStorage.setItem("token", info.token);
-        setToken(info.token);
-
-        navigate("/");
     };
 
     if (lsToken) {
@@ -43,7 +50,6 @@ const Register = ({ setToken }) => {
     return (
         <div id="registration-form" className="register-login_main">
             <form
-                // className="app-form"
                 onSubmit={(e) => {
                     e.preventDefault();
 

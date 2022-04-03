@@ -12,32 +12,37 @@ const AddMyRoutines = ({fetchRoutines}) => {
 
     const addRoutineHandler = async(e) => {
         e.preventDefault();
-        const lsToken = localStorage.getItem('token');
-        const resp = await fetch(`${BASE_URL}api/routines`, {
-            method:"POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${lsToken}`
-            },
-            body: JSON.stringify({
-                name,
-                goal,
-                isPublic: true
-            })
-        });
+        try {
+            const lsToken = localStorage.getItem('token');
+            const resp = await fetch(`${BASE_URL}api/routines`, {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${lsToken}`
+                },
+                body: JSON.stringify({
+                    name,
+                    goal,
+                    isPublic: true
+                })
+            });
 
-        const info = await resp.json();
+            const info = await resp.json();
 
-        if(info.error) {
-            setError(error.message);
+            if(info.error) {
+                setError(error.message);
+            }
+
+            setName("");
+            setGoal("");
+
+            fetchRoutines();
+
+            return info;
+
+        } catch (error) {
+            throw error;
         }
-
-        setName("");
-        setGoal("");
-
-        fetchRoutines();
-
-        return info
     }
 
 
